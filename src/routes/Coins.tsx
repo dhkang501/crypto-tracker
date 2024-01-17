@@ -67,8 +67,9 @@ interface CoinInterface {
 function Coins() {
     //빈배열로 
     const [coins, setCoins] = useState<CoinInterface[]>([]);
-    const [loding, setLoding] = useState(true);
+    const [loding, setLoading] = useState(true);
     //component life의 시작점에서 실행
+    //useEffect: component가 생성될 때 한번만 코드를 실행하도록 하는 hook
     useEffect(() => {
         // 이렇게 만든 함수는 바로 실행이 된다. 작은 꿀팁:)
         // (() => console.log(1))();
@@ -77,7 +78,7 @@ function Coins() {
             const json = await response.json();
             json.slice(0, 100);//데이터 너무 많음 100개만 잘라서 사용
             setCoins(json.slice(0,100));
-            setLoding(false);//state안에 코인이 다 세팅되면 false로 바꿔줌
+            setLoading(false);//state안에 코인이 다 세팅되면 false로 바꿔줌
         })();
     }, []);
     console.log(coins);
