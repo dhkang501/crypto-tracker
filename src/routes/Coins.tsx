@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { fetchCoins } from "../api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -54,44 +56,27 @@ const Img = styled.img`
 `;
 
 //  타입스크립트에 데이터 형식 알려주기
-interface CoinInterface {
+interface ICoin {
     id: string,
     name: string,
     symbol: string,
-    rank: number,
-    is_new: boolean,
-    is_active: boolean,
-    type: string,
 }
 
 function Coins() {
-    //빈배열로 
-    const [coins, setCoins] = useState<CoinInterface[]>([]);
-    const [loding, setLoading] = useState(true);
-    //component life의 시작점에서 실행
-    //useEffect: component가 생성될 때 한번만 코드를 실행하도록 하는 hook
-    useEffect(() => {
-        // 이렇게 만든 함수는 바로 실행이 된다. 작은 꿀팁:)
-        // (() => console.log(1))();
-        (async() => {
-            const response = await fetch("https://api.coinpaprika.com/v1/coins");
-            const json = await response.json();
-            json.slice(0, 100);//데이터 너무 많음 100개만 잘라서 사용
-            setCoins(json.slice(0,100));
-            setLoading(false);//state안에 코인이 다 세팅되면 false로 바꿔줌
-        })();
-    }, []);
-    console.log(coins);
+    // useQuery hook은 fetch 함수를 부르고 fetcher함수가 loading 중이라면 react query는 isLoding에서 그걸 알려준다. 그리고 fetch함수가 끝나면  react query는 json을 data에 넣는다.
+    //장점 중 하나는 isLoding이라고 불리는 boolean 값을 return한다.
+    //페이지를 나갔다가 들어왔을때 로딩이 안도는 이유는 allCoins에 캐시를 저장했기 떄문이다.
+    const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
     return (
         <Container>
             <Header>
                 <Title>코인</Title>
             </Header>
-            {loding ? (
+            {isLoading ? (
                 <Loader>Loding...</Loader>
             ) : (
                 <CoinList>
-                    {coins.map((coin) => (
+                    {data?.slice(0, 100).map((coin) => (
                         <Coin key={coin.id}>
                             <Link to={{
                                 pathname: `/${coin.id}`,
