@@ -1,6 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { lightTheme, darkTheme } from "./theme";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400&display=swap');
@@ -64,14 +67,18 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function App() {
+  const isDark = useRecoilValue(isDarkAtom);
   //두개의 컴포넌트 반환하는 방법(하나의 Element만 리턴해야함)
   //1. <div><GlobalStyle/><Router/></div> : 이렇게 하면 쓸모없는 부모 div가 생김
   //2. <><GlobalStyle/><Router/></> Fragment: 일종의 유령 컴포넌트, 부모 없이 서로 붙어 있는 것들을 리턴할 수 있음 
   return (
     <> 
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      {/* <button onClick={toggleDark}>토글버튼</button> */}
       <GlobalStyle/>
       <Router/>
       <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   )
 }
