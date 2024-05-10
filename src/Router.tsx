@@ -6,12 +6,12 @@ import Coins from "./routes/Coins";
 function Router() {
     return <BrowserRouter>
         <Switch>
+            <Route>
+                <Coins />
+            </Route>
             {/* url이 변수값을 갖는다 */}
             <Route path="/:coinId">
                 <Coin />
-            </Route>
-            <Route>
-                <Coins />
             </Route>
         </Switch>
     </BrowserRouter>
