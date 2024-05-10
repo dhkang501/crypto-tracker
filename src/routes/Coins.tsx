@@ -64,7 +64,6 @@ interface ICoin {
     name: string,
     symbol: string,
 }
-interface ICoinsProps {}
 
 function Coins() {
     const setDartAtom = useSetRecoilState(isDarkAtom)
