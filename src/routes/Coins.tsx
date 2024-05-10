@@ -94,8 +94,9 @@ function Coins() {
                                 pathname: `/${coin.id}`,
                                 state: {name: coin.name},
                             }}>
+                                {/* https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()} */}
                                 {/* https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/16/${coin.name .toLowerCase().split(" ").join("-")}.png`}  */}
-                                <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} alt="" />
+                                <Img src={`https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/16/${coin.name.toLowerCase().split(" ").join("-")}.png`} alt="" />
                                 {coin.name} &rarr;
                             </Link>
                         </Coin>
