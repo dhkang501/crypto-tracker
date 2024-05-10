@@ -178,7 +178,7 @@ function Coin() {
                 {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
             </Title>
         </Header>
-        <Link to={"/react-master"}>Home</Link>
+        <Link to={'/react-master'}>Home</Link>
         {loading ? (
             <Loader>Loading...</Loader>
         ) : (
