@@ -6,7 +6,7 @@ import Coins from "./routes/Coins";
 function Router() {
     return <BrowserRouter>
         <Switch>
-            <Route>
+            <Route exact path='/react-master'>
                 <Coins />
             </Route>
             {/* url이 변수값을 갖는다 */}
